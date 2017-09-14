@@ -116,18 +116,15 @@ static void MarkDeath(void *xmlPtr, DDXMLNode *wrapper);
 + (id)attributeWithName:(NSString *)name stringValue:(NSString *)stringValue
 {
 	xmlAttrPtr attr = xmlNewProp(NULL, [name xmlChar], [stringValue xmlChar]);
-	
-	if (attr == NULL) return nil;
-	
+	assert(attr != NULL);
 	return [[DDXMLAttributeNode alloc] initWithAttrPrimitive:attr owner:nil];
 }
 
 + (id)attributeWithName:(NSString *)name URI:(NSString *)URI stringValue:(NSString *)stringValue
 {
 	xmlAttrPtr attr = xmlNewProp(NULL, [name xmlChar], [stringValue xmlChar]);
-	
-	if (attr == NULL) return nil;
-	
+	assert(attr != NULL);
+
 	DDXMLAttributeNode *result = [[DDXMLAttributeNode alloc] initWithAttrPrimitive:attr owner:nil];
 	[result setURI:URI];
 	
@@ -140,36 +137,28 @@ static void MarkDeath(void *xmlPtr, DDXMLNode *wrapper);
 	const xmlChar *xmlName = [name length] > 0 ? [name xmlChar] : NULL;
 	
 	xmlNsPtr ns = xmlNewNs(NULL, [stringValue xmlChar], xmlName);
-	
-	if (ns == NULL) return nil;
-	
+	assert(ns != NULL);
 	return [[DDXMLNamespaceNode alloc] initWithNsPrimitive:ns nsParent:NULL owner:nil];
 }
 
 + (id)processingInstructionWithName:(NSString *)name stringValue:(NSString *)stringValue
 {
 	xmlNodePtr procInst = xmlNewPI([name xmlChar], [stringValue xmlChar]);
-	
-	if (procInst == NULL) return nil;
-	
+	assert(procInst != NULL);
 	return [[DDXMLNode alloc] initWithPrimitive:(xmlKindPtr)procInst owner:nil];
 }
 
 + (id)commentWithStringValue:(NSString *)stringValue
 {
 	xmlNodePtr comment = xmlNewComment([stringValue xmlChar]);
-	
-	if (comment == NULL) return nil;
-	
+	assert(comment != NULL);
 	return [[DDXMLNode alloc] initWithPrimitive:(xmlKindPtr)comment owner:nil];
 }
 
 + (id)textWithStringValue:(NSString *)stringValue
 {
 	xmlNodePtr text = xmlNewText([stringValue xmlChar]);
-	
-	if (text == NULL) return nil;
-	
+	assert(text != NULL);
 	return [[DDXMLNode alloc] initWithPrimitive:(xmlKindPtr)text owner:nil];
 }
 
